@@ -1,10 +1,10 @@
 package app;
 
 import app.model.User;
+import app.service.UserService;
+import app.util.UserPrinter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -53,21 +53,31 @@ public class Main {
             if(isFemale) {
 
                 if( hasMiddleName ) {
-                    newUser = new User(i, femaleNames.get(firstNameIdx), femaleNames.get(middleNameIdx), lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
+                    newUser = new User(i, femaleNames.get(firstNameIdx), femaleNames.get(middleNameIdx), lastNames.get(lastNameIdx), randomGenerator.nextInt(42));
                 } else {
-                    newUser = new User(i, femaleNames.get(firstNameIdx), "", lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
+                    newUser = new User(i, femaleNames.get(firstNameIdx), null, lastNames.get(lastNameIdx), randomGenerator.nextInt(42));
                 }
             } else {
                 if( hasMiddleName ) {
-                    newUser = new User(i, maleNames.get(firstNameIdx), maleNames.get(middleNameIdx), lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
+                    newUser = new User(i, maleNames.get(firstNameIdx), maleNames.get(middleNameIdx), lastNames.get(lastNameIdx), randomGenerator.nextInt(42));
                 } else {
-                    newUser = new User(i, maleNames.get(firstNameIdx), "", lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
+                    newUser = new User(i, maleNames.get(firstNameIdx), null, lastNames.get(lastNameIdx), randomGenerator.nextInt(42));
                 }
 
             }
 
             userList.add(newUser);
         }
+
+        UserPrinter.printUsers(userList);
+        UserService service = new UserService();
+        Optional<User> user = service.findById(userList, 12);
+        System.out.println("User with id = 12: " + user.toString() );
+        List<User> listOfAdultUsers = service.findAdults(userList);
+        UserPrinter.printUsers(listOfAdultUsers);
+        System.out.println("Any user under age: " + service.anyUserUnderAge(userList, 3));
+        Map<Integer, List<User>> map = service.groupUsers(userList);
+        System.out.println(map);
 
 
     }
