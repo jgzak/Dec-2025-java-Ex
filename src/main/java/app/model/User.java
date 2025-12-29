@@ -28,6 +28,14 @@ public class User {
         this(id, "", "", 0);
     }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
     @Override
     public String toString() {
         return "User{name='" + firstName + " " +  (middleName != null ? middleName.get() + " " : "")  + lastName + ", age: " + age + "'}";

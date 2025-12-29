@@ -69,9 +69,7 @@ public class Main {
             userList.add(newUser);
         }
 
-        for (User user : userList) {
-            System.out.println(user.toString());
-        }
+
     }
 
 
