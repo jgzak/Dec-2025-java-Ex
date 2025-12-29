@@ -1,6 +1,6 @@
-package main.java.app.service;
+package app.service;
 
-import main.java.app.model.User;
+import app.model.User;
 
 import java.util.*;
 import java.util.stream.Collectors;

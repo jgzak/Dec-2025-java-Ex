@@ -1,6 +1,6 @@
-package main.java.app;
+package app;
 
-import main.java.app.model.User;
+import app.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +55,13 @@ public class Main {
                 if( hasMiddleName ) {
                     newUser = new User(i, femaleNames.get(firstNameIdx), femaleNames.get(middleNameIdx), lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
                 } else {
-                    newUser = new User(i, femaleNames.get(firstNameIdx), lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
+                    newUser = new User(i, femaleNames.get(firstNameIdx), "", lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
                 }
             } else {
                 if( hasMiddleName ) {
                     newUser = new User(i, maleNames.get(firstNameIdx), maleNames.get(middleNameIdx), lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
                 } else {
-                    newUser = new User(i, maleNames.get(firstNameIdx), lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
+                    newUser = new User(i, maleNames.get(firstNameIdx), "", lastNames.get(lastNameIdx), randomGenerator.nextInt(120));
                 }
 
             }
