@@ -21,11 +21,8 @@ public class UserService {
     }
 
     public boolean anyUserUnderAge(List<User> users, int age) {
-        int size = users.stream()
-                .filter(user -> user.getAge() < age)
-                .toList()
-                .size();
-        return size > 0;
+        return users.stream()
+                .anyMatch(user -> user.getAge() < age);
     }
 
     public Map<Integer, List<User>> groupUsers(List<User> users) {

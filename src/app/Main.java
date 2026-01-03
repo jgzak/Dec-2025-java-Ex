@@ -5,11 +5,36 @@ import app.service.UserService;
 import app.util.UserPrinter;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+
+    static CompletableFuture<Integer> fetchUserId() {
+        return CompletableFuture.supplyAsync(() -> {
+            sleep(500);
+            return 42;
+        });
+    }
+
+    static CompletableFuture<String> fetchUserName(int id) {
+        return CompletableFuture.supplyAsync(() -> {
+            sleep(500);
+            if (id == 42) return "alice";
+            throw new RuntimeException("User not found");
+        });
+    }
+
+    static void sleep(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void main_BACK(String[] args) {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
         System.out.printf("Hello and welcome!");
@@ -75,9 +100,28 @@ public class Main {
         System.out.println("User with id = 12: " + user.toString() );
         List<User> listOfAdultUsers = service.findAdults(userList);
         UserPrinter.printUsers(listOfAdultUsers);
-        System.out.println("Any user under age: " + service.anyUserUnderAge(userList, 3));
+        System.out.println("Any user under age: " + service.anyUserUnderAge(userList, 12));
         Map<Integer, List<User>> map = service.groupUsers(userList);
         System.out.println(map);
+
+
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Starting program....");
+        CompletableFuture<Void> result = fetchUserId()
+                .thenCompose((id) -> {
+                    System.out.println("ID: " + id);
+                    return fetchUserName(id);
+                })
+                        .thenAccept(System.out::println)
+                .exceptionally(exception -> {
+                    System.out.println(exception);
+                    return null;
+                });
+        result.join();
+
+
 
 
     }
